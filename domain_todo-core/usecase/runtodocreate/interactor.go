@@ -22,11 +22,14 @@ func (r *runTodoCreateInteractor) Execute(ctx context.Context, req InportRequest
 
 	// code your usecase definition here ...
 
+	req.Validate()
 	todoObj, err := entity.NewTodo(req.TodoCreateRequest)
 	if err != nil {
 		return nil, err
 	}
-
+	if err := r.outport.FindMessageTodoEmpty(ctx, todoObj); err != nil {
+		return nil, err
+	}
 	err = r.outport.SaveTodo(ctx, todoObj)
 	if err != nil {
 		return nil, err

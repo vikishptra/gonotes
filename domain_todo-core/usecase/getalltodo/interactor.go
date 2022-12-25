@@ -3,6 +3,7 @@ package getalltodo
 import (
 	"context"
 
+	"vikishptra/domain_todo-core/model/errorenum"
 	"vikishptra/shared/util"
 )
 
@@ -29,7 +30,9 @@ func (r *getAllTodoInteractor) Execute(ctx context.Context, req InportRequest) (
 
 	res.Count = count
 	res.Items = util.ToSliceAny(todoObjs)
-
+	if res.Items == nil {
+		return nil, errorenum.DataNull
+	}
 	//!
 
 	return res, nil

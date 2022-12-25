@@ -45,39 +45,46 @@ func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Co
 
 func (r *Gateway) SaveTodo(ctx context.Context, obj *entity.Todo) error {
 	r.log.Info(ctx, "called")
-
-	var testt entity.Todo
-	test := r.Db.Where("message = ?", obj.Message).First(&testt)
-
-	if !test.RecordNotFound() {
-		return errorenum.ObjSame
-	}
-
-	err := r.Db.Save(obj).Error
-	if err != nil {
+	if err := r.Db.Save(obj).Error; err != nil {
 		panic(err)
 	}
+
 	return nil
 }
 
 func (r *Gateway) FindOneChecked(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error) {
 	r.log.Info(ctx, "called")
 
-	var test entity.Todo
-	if err := r.Db.First(&test, "id = ?", todoID); err.RecordNotFound() {
+	var todo entity.Todo
+	if err := r.Db.First(&todo, "id = ?", todoID); err.RecordNotFound() {
 		return nil, errorenum.DataNull
 	}
-	test.SetTrue()
-	r.Db.Save(&test)
 
-	return &test, nil
+	return &todo, nil
 }
 
 func (r *Gateway) GetAllTodo(ctx context.Context) ([]*entity.Todo, int64, error) {
 	r.log.Info(ctx, "called")
 	var todo []*entity.Todo
-	if test := r.Db.Find(&todo); test.RowsAffected != 1 {
+	if err := r.Db.Find(&todo); err.RowsAffected < 0 {
 		return nil, 0, errorenum.DataNull
 	}
 	return todo, 0, nil
+}
+
+func (r *Gateway) DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error) {
+	r.log.Info(ctx, "called")
+	var todo entity.Todo
+	r.Db.Where("id = ?", todoID).Delete(&todo)
+
+	return &todo, nil
+}
+
+func (r *Gateway) FindMessageTodoEmpty(ctx context.Context, todo *entity.Todo) error {
+	r.log.Info(ctx, "called")
+	var todos entity.Todo
+	if err := r.Db.Where("message = ?", todo.Message).First(&todos); !err.RecordNotFound() {
+		return errorenum.ObjSame
+	}
+	return nil
 }

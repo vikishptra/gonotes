@@ -18,3 +18,11 @@ type FindOneCheckedRepo interface {
 type GetAllTodoRepo interface {
 	GetAllTodo(ctx context.Context) ([]*entity.Todo, int64, error)
 }
+
+type DeleteOneTodoByIDRepo interface {
+	DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error)
+}
+
+type FindMessageTodoEmptyRepo interface {
+	FindMessageTodoEmpty(ctx context.Context, obj *entity.Todo) error
+}

@@ -24,7 +24,8 @@ func (r *runTodoCheckedInteractor) Execute(ctx context.Context, req InportReques
 	if err != nil {
 		return nil, err
 	}
-
+	todoObj.SetTrue()
+	r.outport.SaveTodo(ctx, todoObj)
 	res.Todo = todoObj
 
 	return res, nil
