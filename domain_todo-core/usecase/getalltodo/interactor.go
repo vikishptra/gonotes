@@ -23,7 +23,7 @@ func (r *getAllTodoInteractor) Execute(ctx context.Context, req InportRequest) (
 
 	// code your usecase definition here ...
 
-	todoObjs, count, err := r.outport.GetAllTodo(ctx, req.Page, req.Size)
+	todoObjs, count, page, err := r.outport.GetAllTodo(ctx, req.Page, req.Size)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (r *getAllTodoInteractor) Execute(ctx context.Context, req InportRequest) (
 	if res.Items == nil {
 		return nil, errorenum.DataNull
 	}
-
+	res.Page = page
 	//!
 
 	return res, nil

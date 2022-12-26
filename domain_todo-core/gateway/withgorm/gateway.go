@@ -63,7 +63,7 @@ func (r *Gateway) FindOneChecked(ctx context.Context, todoID vo.TodoID) (*entity
 	return &todo, nil
 }
 
-func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity.Todo, int64, error) {
+func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity.Todo, int64, int, error) {
 	r.log.Info(ctx, "called")
 	var todo []*entity.Todo
 
@@ -72,10 +72,11 @@ func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity
 	if err := r.Db.
 		Model(entity.Todo{}).
 		Count(&count).
+		Limit(size).Offset((page - 1) * size).
 		Find(&todo); err.RowsAffected == 0 {
-		return nil, count, errorenum.DataNull
+		return nil, count, page, errorenum.DataNull
 	}
-	return todo, count, nil
+	return todo, count, page, nil
 }
 
 func (r *Gateway) DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error) {

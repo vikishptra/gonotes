@@ -42,6 +42,8 @@ func (r *ginController) getAllTodoHandler() gin.HandlerFunc {
 		}
 
 		var req InportRequest
+		req.Page = jsonReq.Page
+		req.Size = jsonReq.Size
 
 		r.log.Info(ctx, util.MustJSON(req))
 
@@ -55,7 +57,7 @@ func (r *ginController) getAllTodoHandler() gin.HandlerFunc {
 		var jsonRes response
 		jsonRes.Count = res.Count
 		jsonRes.Items = res.Items
-
+		jsonRes.Page = res.Page
 		r.log.Info(ctx, util.MustJSON(jsonRes))
 		c.JSON(http.StatusOK, payload.NewSuccessResponse(jsonRes, traceID))
 

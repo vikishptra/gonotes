@@ -14,4 +14,5 @@ type InportRequest struct {
 type InportResponse struct {
 	Count int64 `json:"count"`
 	Items []any `json:"items"`
+	Page  int   `json:"page"`
 }
