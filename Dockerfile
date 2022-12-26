@@ -23,5 +23,6 @@ FROM scratch
 WORKDIR /app
 
 COPY --from=builder /app/vikishptra /usr/bin/
+COPY --from=builder /app/vikishptra/.docker/config.json /app
 
 # ENTRYPOINT ["vikishptra", "myapp"]
