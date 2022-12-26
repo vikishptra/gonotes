@@ -36,4 +36,5 @@ func (r *ginController) RegisterRouter(router selectedRouter) {
 	resource.GET("/todo", r.authorization(), r.getAllTodoHandler())
 	resource.DELETE("/todo/:id", r.authorization(), r.runTodoDeleteByIDHandler())
 	resource.GET("/todo/:id", r.authorization(), r.getTodoByIDHandler())
+	resource.POST("/todo/:id", r.authorization(), r.runUpdateMessageTodoByIDHandler())
 }

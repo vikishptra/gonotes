@@ -58,13 +58,22 @@ func (r *Todo) SetTrue() error {
 	return nil
 }
 
+func (r TodoUpdateRequest) Validate() error {
+
+	if strings.TrimSpace(r.Message) == "" {
+		return errorenum.MessageEmpty
+	}
+
+	return nil
+}
+
 type TodoUpdateRequest struct {
-	// add field to update here ...
+	ID      vo.TodoID `uri:"id"`
+	Message string    `json:"message"`
 }
 
 func (r *Todo) Update(req TodoUpdateRequest) error {
+	r.Message = req.Message
 
-	// add validation and assignment value here ...
-
-	return nil
+	return req.Validate()
 }

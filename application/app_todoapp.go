@@ -8,6 +8,7 @@ import (
 	"vikishptra/domain_todo-core/usecase/runtodochecked"
 	"vikishptra/domain_todo-core/usecase/runtodocreate"
 	"vikishptra/domain_todo-core/usecase/runtododeletebyid"
+	"vikishptra/domain_todo-core/usecase/runupdatemessagetodobyid"
 	"vikishptra/shared/gogen"
 	"vikishptra/shared/infrastructure/config"
 	"vikishptra/shared/infrastructure/logger"
@@ -40,6 +41,7 @@ func (todoapp) Run() error {
 	x := todoapi.NewGinController(log, cfg, jwtToken)
 	x.AddUsecase(
 		//
+		runupdatemessagetodobyid.NewUsecase(datasource),
 		gettodobyid.NewUsecase(datasource),
 		runtododeletebyid.NewUsecase(datasource),
 		getalltodo.NewUsecase(datasource),
