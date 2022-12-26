@@ -1,4 +1,16 @@
 
+# GO-NOTES
+
+GO-NOTES adalah sebuah microservice simple notes yang di dalam nya terdapat operasi create,read,update,delete yang sudah pasti terdapat error handling sesuai dengan case saya sendiri
+
+- runCreateTodo 
+- getAllTodo
+- getTodoByID
+- runTodoByChecked
+- runTodoDeleteByID
+- runUpdateTodoByID
+
+
 ## API GONOTES
 
 #### Get all items with pagination
