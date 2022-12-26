@@ -23,6 +23,6 @@ FROM scratch
 WORKDIR /app
 
 COPY --from=builder /gonotes/vikishptra /usr/bin/
-COPY --from=builder /gonotes/config.json /gonotes
+COPY --from=builder /config.json /app/
 
 # ENTRYPOINT ["vikishptra", "myapp"]
