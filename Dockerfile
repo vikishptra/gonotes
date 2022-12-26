@@ -2,7 +2,7 @@
 # BUILD BINARY #
 ################
 
-FROM golang:1.18-alpine3.15 as builder
+FROM golang:1.18.2-alpine3.15 as builder
 
 RUN apk update && apk add --no-cache git
 
@@ -23,6 +23,6 @@ FROM scratch
 WORKDIR /app
 
 COPY --from=builder /app/vikishptra /usr/bin/
-COPY --from=builder /app/vikishptra/.docker/config.json /app
+COPY --from=builder /app/config.json /app
 
 # ENTRYPOINT ["vikishptra", "myapp"]
