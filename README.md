@@ -1,2 +1,2 @@
-# Go-notes By Me
+# Gonotes By Me
 
