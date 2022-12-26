@@ -76,6 +76,9 @@ func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity
 		Find(&todo); err.RowsAffected == 0 {
 		return nil, count, page, errorenum.DataNull
 	}
+	if int64(size) > count || int64(size) != count {
+		count = int64(size)
+	}
 	return todo, count, page, nil
 }
 

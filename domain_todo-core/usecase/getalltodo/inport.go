@@ -7,8 +7,8 @@ import (
 type Inport gogen.Inport[InportRequest, InportResponse]
 
 type InportRequest struct {
-	Page int
-	Size int
+	Page int `form:"page"`
+	Size int `form:"size"`
 }
 
 type InportResponse struct {

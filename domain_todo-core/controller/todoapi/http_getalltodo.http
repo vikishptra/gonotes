@@ -1,4 +1,4 @@
 ###
 
-GET http://localhost:8001/api/v1/todo/?Page=1&Size=2
+GET http://localhost:8001/api/v1/todo/?page=3&size=8
 
