@@ -4,6 +4,7 @@ import (
 	"vikishptra/domain_todo-core/controller/todoapi"
 	"vikishptra/domain_todo-core/gateway/withgorm"
 	"vikishptra/domain_todo-core/usecase/getalltodo"
+	"vikishptra/domain_todo-core/usecase/gettodobyid"
 	"vikishptra/domain_todo-core/usecase/runtodochecked"
 	"vikishptra/domain_todo-core/usecase/runtodocreate"
 	"vikishptra/domain_todo-core/usecase/runtododeletebyid"
@@ -39,6 +40,7 @@ func (todoapp) Run() error {
 	x := todoapi.NewGinController(log, cfg, jwtToken)
 	x.AddUsecase(
 		//
+		gettodobyid.NewUsecase(datasource),
 		runtododeletebyid.NewUsecase(datasource),
 		getalltodo.NewUsecase(datasource),
 		runtodochecked.NewUsecase(datasource),

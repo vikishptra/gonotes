@@ -63,13 +63,19 @@ func (r *Gateway) FindOneChecked(ctx context.Context, todoID vo.TodoID) (*entity
 	return &todo, nil
 }
 
-func (r *Gateway) GetAllTodo(ctx context.Context) ([]*entity.Todo, int64, error) {
+func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity.Todo, int64, error) {
 	r.log.Info(ctx, "called")
 	var todo []*entity.Todo
-	if err := r.Db.Find(&todo); err.RowsAffected < 0 {
-		return nil, 0, errorenum.DataNull
+
+	var count int64
+
+	if err := r.Db.
+		Model(entity.Todo{}).
+		Count(&count).
+		Find(&todo); err.RowsAffected == 0 {
+		return nil, count, errorenum.DataNull
 	}
-	return todo, 0, nil
+	return todo, count, nil
 }
 
 func (r *Gateway) DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error) {
@@ -87,4 +93,14 @@ func (r *Gateway) FindMessageTodoEmpty(ctx context.Context, todo *entity.Todo) e
 		return errorenum.ObjSame
 	}
 	return nil
+}
+
+func (r *Gateway) GetTodoByID(ctx context.Context, todoID vo.TodoID) ([]*entity.Todo, error) {
+
+	r.log.Info(ctx, "called")
+	var todos []*entity.Todo
+	if err := r.Db.First(&todos, "id = ?", todoID); err.RecordNotFound() {
+		return nil, errorenum.DataNull
+	}
+	return todos, nil
 }

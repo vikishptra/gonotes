@@ -16,7 +16,7 @@ type FindOneCheckedRepo interface {
 }
 
 type GetAllTodoRepo interface {
-	GetAllTodo(ctx context.Context) ([]*entity.Todo, int64, error)
+	GetAllTodo(ctx context.Context, page, size int) ([]*entity.Todo, int64, error)
 }
 
 type DeleteOneTodoByIDRepo interface {
@@ -25,4 +25,8 @@ type DeleteOneTodoByIDRepo interface {
 
 type FindMessageTodoEmptyRepo interface {
 	FindMessageTodoEmpty(ctx context.Context, obj *entity.Todo) error
+}
+
+type GetTodoByIDRepo interface {
+	GetTodoByID(ctx context.Context, someID vo.TodoID) ([]*entity.Todo, error)
 }
