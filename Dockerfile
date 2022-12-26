@@ -4,7 +4,7 @@
 
 FROM golang:1.18.2-alpine3.15 as builder
 
-RUN apk update && apk add --no-cache git
+RUN apk update && apk add --no-cache
 
 WORKDIR /app
 
