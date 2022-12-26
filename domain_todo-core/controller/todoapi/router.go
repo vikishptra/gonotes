@@ -30,11 +30,11 @@ func NewGinController(log logger.Logger, cfg *config.Config, tk token.JWTToken) 
 func (r *ginController) RegisterRouter(router selectedRouter) {
 
 	resource := router.Group("/api/v1", r.authentication())
-	resource.POST("/todo", r.authorization(), r.runTodoCreateHandler())
+	resource.POST("/todo/message", r.authorization(), r.runTodoCreateHandler())
 
 	resource.PUT("/todo/:id", r.authorization(), r.runTodoCheckedHandler())
 	resource.GET("/todo", r.authorization(), r.getAllTodoHandler())
 	resource.DELETE("/todo/:id", r.authorization(), r.runTodoDeleteByIDHandler())
 	resource.GET("/todo/:id", r.authorization(), r.getTodoByIDHandler())
-	resource.POST("/todo/:id", r.authorization(), r.runUpdateMessageTodoByIDHandler())
+	resource.PUT("/todo/message/:id", r.authorization(), r.runUpdateMessageTodoByIDHandler())
 }

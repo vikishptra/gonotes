@@ -1,5 +1,5 @@
-POST http://localhost:8001/api/v1/todo/2cf3ca6c-c447-440e-af5e-1209dc8a0041
+PUT  http://localhost:8001/api/v1/todo/message/2cf3ca6c-c447-440e-af5e-1209dc8a0041
 
 {  
-  "message": "hhh"
+  "message": "update put"
 }
