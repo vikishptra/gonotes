@@ -22,7 +22,7 @@ FROM scratch
 # Copy the executable.
 WORKDIR /app
 
-COPY --from=builder /gonotes/vikishptra /usr/bin/
-COPY --from=builder /gonotes/config.json /app/
+COPY --from=builder /app/vikishptra /usr/bin/
+COPY --from=builder /app/config.json /app
 
 # ENTRYPOINT ["vikishptra", "myapp"]
