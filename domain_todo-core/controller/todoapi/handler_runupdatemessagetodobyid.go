@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"vikishptra/domain_todo-core/model/errorenum"
 	"vikishptra/domain_todo-core/usecase/runupdatemessagetodobyid"
 	"vikishptra/shared/gogen"
 	"vikishptra/shared/infrastructure/logger"
@@ -55,6 +56,10 @@ func (r *ginController) runUpdateMessageTodoByIDHandler() gin.HandlerFunc {
 
 		res, err := inport.Execute(ctx, req)
 		if err != nil {
+			if err == errorenum.DataNull {
+				c.JSON(http.StatusNotFound, payload.NewErrorResponse(err, traceID))
+				return
+			}
 			r.log.Error(ctx, err.Error())
 			c.JSON(http.StatusBadRequest, payload.NewErrorResponse(err, traceID))
 			return
