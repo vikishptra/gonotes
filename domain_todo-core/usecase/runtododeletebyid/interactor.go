@@ -20,8 +20,6 @@ func (r *runTodoDeleteByIDInteractor) Execute(ctx context.Context, req InportReq
 
 	res := &InportResponse{}
 
-	// code your usecase definition here ...
-
 	todoObj, err := r.outport.FindOneChecked(ctx, req.TodoID)
 	if err != nil {
 		return nil, err
@@ -31,7 +29,6 @@ func (r *runTodoDeleteByIDInteractor) Execute(ctx context.Context, req InportReq
 	}
 	r.outport.DeleteOneTodoByID(ctx, todoObj.ID)
 	res.Pesan = "ok success"
-	//!
 
 	return res, nil
 }

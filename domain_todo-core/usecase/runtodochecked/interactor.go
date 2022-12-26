@@ -18,8 +18,6 @@ func (r *runTodoCheckedInteractor) Execute(ctx context.Context, req InportReques
 
 	res := &InportResponse{}
 
-	// code your usecase definition here ...
-
 	todoObj, err := r.outport.FindOneChecked(ctx, req.TodoId)
 	if err != nil {
 		return nil, err

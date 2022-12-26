@@ -37,8 +37,6 @@ func NewTodo(req TodoCreateRequest) (*Todo, error) {
 		return nil, err
 	}
 
-	// add validation and assignment value here ...
-
 	var obj Todo
 	obj.ID = id
 	obj.Created = req.Now

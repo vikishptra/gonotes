@@ -21,8 +21,6 @@ func (r *getTodoByIDInteractor) Execute(ctx context.Context, req InportRequest) 
 
 	res := &InportResponse{}
 
-	// code your usecase definition here ...
-
 	todoObjs, err := r.outport.GetTodoByID(ctx, req.TodoID)
 	if err != nil {
 		return nil, err

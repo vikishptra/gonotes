@@ -20,8 +20,6 @@ func (r *runTodoCreateInteractor) Execute(ctx context.Context, req InportRequest
 
 	res := &InportResponse{}
 
-	// code your usecase definition here ...
-
 	req.Validate()
 	todoObj, err := entity.NewTodo(req.TodoCreateRequest)
 	if err != nil {
