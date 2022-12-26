@@ -21,8 +21,6 @@ func (r *getAllTodoInteractor) Execute(ctx context.Context, req InportRequest) (
 
 	res := &InportResponse{}
 
-	// code your usecase definition here ...
-
 	todoObjs, count, page, err := r.outport.GetAllTodo(ctx, req.Page, req.Size)
 	if err != nil {
 		return nil, err
@@ -34,7 +32,6 @@ func (r *getAllTodoInteractor) Execute(ctx context.Context, req InportRequest) (
 		return nil, errorenum.DataNull
 	}
 	res.Page = page
-	//!
 
 	return res, nil
 }
