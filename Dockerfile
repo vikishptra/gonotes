@@ -29,4 +29,3 @@ ENTRYPOINT ["vikishptra", "myapp"]
 
 CMD [ "./vikishptra" ] --v
 
-RUN go build .
