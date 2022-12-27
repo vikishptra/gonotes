@@ -33,7 +33,7 @@ func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Co
 	dbPort := os.Getenv("MYSQLPORT")
 	database := os.Getenv("MYSQLDATABASE")
 
-	dsn := fmt.Sprintf("user=%s:password=%s@tcphost=%sport=%s/db=%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
 
 	Db, err := gorm.Open("mysql", dsn)
 
