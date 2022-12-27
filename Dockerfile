@@ -26,6 +26,3 @@ COPY --from=builder /app/vikishptra /usr/bin/
 COPY --from=builder /app/.env /app
 
 ENTRYPOINT ["vikishptra", "myapp"]
-CMD vikishptra
-
-RUN go run /app/main.go todoapp
