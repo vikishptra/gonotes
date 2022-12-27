@@ -27,5 +27,5 @@ COPY --from=builder /app/.env /app
 
 ENTRYPOINT ["vikishptra", "myapp"]
 
-CMD [ "./vikishptra" ] --v
+CMD [ "./vikishptra","myapp" ] --v
 
