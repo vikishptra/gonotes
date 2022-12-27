@@ -1,10 +1,10 @@
 {
     "database": {
-      "database": "railway",
-      "host": "containers-us-west-89.railway.app",
-      "password": "BbvH8Gn6zls44OfxeAhm",
-      "port": 5497,
-      "username": "root"
+      "database": "",
+      "host": "",
+      "password": "",
+      "port": 0,
+      "username": ""
     },
     "server": {
       "port": 8080
@@ -15,3 +15,4 @@
       }
     }
   }
+  
