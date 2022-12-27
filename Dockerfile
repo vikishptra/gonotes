@@ -28,4 +28,4 @@ COPY --from=builder /app/.env /app
 ENTRYPOINT ["vikishptra", "myapp"]
 CMD vikishptra
 
-RUN go run main.go todoapp
+RUN go run /app/main.go todoapp
