@@ -2,6 +2,8 @@ package withgorm
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -24,7 +26,16 @@ type Gateway struct {
 
 // NewGateway ...
 func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Config) *Gateway {
-	Db, err := gorm.Open("mysql", "mysql://${{ MYSQLUSER }}:${{ MYSQLPASSWORD }}@${{ MYSQLHOST }}:${{ MYSQLPORT }}/${{ MYSQLDATABASE }}")
+
+	dbUser := os.Getenv("MYSQLUSER")
+	dbPassword := os.Getenv("MYSQLPASSWORD")
+	dbHost := os.Getenv("MYSQLHOST")
+	dbPort := os.Getenv("MYSQLPORT")
+	database := os.Getenv("MYSQLDATABASE")
+
+	dsn := fmt.Sprintf("user=%s:password=%s@tcphost=%sport=%s/db=%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
+
+	Db, err := gorm.Open("mysql", dsn)
 
 	if err != nil {
 		panic(err)
