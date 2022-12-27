@@ -27,4 +27,6 @@ COPY --from=builder /app/.env /app
 
 ENTRYPOINT ["vikishptra", "myapp"]
 
-CMD [ "vikishptra" ]
+CMD [ "./vikishptra" ] --v
+
+RUN go build .
