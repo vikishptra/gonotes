@@ -3,7 +3,7 @@
       "database": "railway",
       "host": "containers-us-west-89.railway.app",
       "password": "BbvH8Gn6zls44OfxeAhm",
-      "port": 5497,
+      "port": 3306,
       "username": "root"
     },
     "server": {
