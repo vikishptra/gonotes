@@ -25,7 +25,7 @@ WORKDIR /app
 COPY --from=builder /app/vikishptra /usr/bin/
 COPY --from=builder /app/.env /app
 
-ENTRYPOINT ["vikishptra", "myapp"]
+ENTRYPOINT ["vikishptra", "todoapp"]
 
-CMD [ "./vikishptra","myapp" ] --v
+CMD [ "./vikishptra","todoapp" ] --v
 
