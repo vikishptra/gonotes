@@ -24,7 +24,7 @@ type Gateway struct {
 
 // NewGateway ...
 func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Config) *Gateway {
-	Db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/notes?charset=utf8&parseTime=True")
+	Db, err := gorm.Open("mysql", "root:@tcp(0.0.0.0:3306)/notes?charset=utf8&parseTime=True")
 
 	if err != nil {
 		panic(err)
