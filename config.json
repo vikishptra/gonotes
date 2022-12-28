@@ -7,11 +7,11 @@
       "username": ""
     },
     "server": {
-      "port": 8080
+      "port": 8000
     },
     "servers": {
       "todoapp": {
-        "address": ":8080"
+        "address": ":8000"
       }
     }
   }
