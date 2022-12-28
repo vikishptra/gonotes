@@ -1,6 +1,8 @@
 package todoapi
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 
 	"vikishptra/shared/gogen"
@@ -29,6 +31,12 @@ func NewGinController(log logger.Logger, cfg *config.Config, tk token.JWTToken) 
 
 func (r *ginController) RegisterRouter(router selectedRouter) {
 
+	routerr := gin.Default()
+	_, err := os.LookupEnv("PORT")
+
+	if err {
+		routerr.Run()
+	}
 	resource := router.Group("/api/v1", r.authentication())
 	resource.POST("/todo/message", r.authorization(), r.runTodoCreateHandler())
 
