@@ -26,9 +26,9 @@ WORKDIR /app
 COPY --from=builder /app/vikishptra /usr/bin/
 COPY --from=builder /app/config.json /app
 
-ENV $PORT=8080
+EXPOSE 8080
 
 ENTRYPOINT ["vikishptra", "todoapp"]
 
-CMD [ "./vikishptra","todoapp" ] --v
+CMD [ "./vikishptra","todoapp", "0.0.0.0:8080" ] --v
 
