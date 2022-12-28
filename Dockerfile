@@ -30,5 +30,5 @@ EXPOSE 8080
 
 ENTRYPOINT ["vikishptra", "todoapp"]
 
-CMD [ "./vikishptra","todoapp", "http://gonotes-production.up.railway.app:8080" ] --v
+CMD [ "./vikishptra","todoapp", "0.0.0.0:8080" ] --v
 
