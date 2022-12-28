@@ -1,5 +1,5 @@
-POST http://localhost:8001/api/v1/todo/message
+POST https://gonotes-api.up.railway.app/api/v1/todo/message
 
 { 
-    "message":"nnknk"
+    "message":"sfsfssfss"
 }
