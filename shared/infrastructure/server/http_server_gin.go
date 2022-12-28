@@ -24,7 +24,7 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 	_, err := os.LookupEnv("PORT")
 
 	if err {
-		router.Run("ini dari railway :" + os.Getenv("PORT"))
+		router.Run(":" + os.Getenv("PORT"))
 	}
 
 	// PING API
