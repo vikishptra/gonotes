@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -30,15 +31,19 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 	// router.StaticFS("/web", http.FS(contentStatic))
 
 	// CORS
-	router.Use(cors.New(cors.Config{
-		ExposeHeaders:   []string{"Data-Length"},
-		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
-		AllowAllOrigins: true,
-		AllowHeaders:    []string{"Content-Type", "Authorization"},
-		MaxAge:          12 * time.Hour,
-	}))
 
-	router.Run("PORT")
+	_, err := os.LookupEnv("PORT")
+
+	if err {
+		router.Run()
+		router.Use(cors.New(cors.Config{
+			ExposeHeaders:   []string{"Data-Length"},
+			AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
+			AllowAllOrigins: true,
+			AllowHeaders:    []string{"Content-Type", "Authorization"},
+			MaxAge:          12 * time.Hour,
+		}))
+	}
 
 	return GinHTTPHandler{
 		GracefullyShutdown: NewGracefullyShutdown(log, router, address),
