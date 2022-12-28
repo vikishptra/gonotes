@@ -3,15 +3,15 @@
       "database": "",
       "host": "",
       "password": "",
-      "port": 0,
+      "port": 8080,
       "username": ""
     },
     "server": {
-      "port": 8000
+      "port": 8080
     },
     "servers": {
       "todoapp": {
-        "address": ":8000"
+        "address": ":8080"
       }
     }
   }
