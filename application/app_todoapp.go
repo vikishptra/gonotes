@@ -42,10 +42,6 @@ func (todoapp) Run() error {
 
 	_, err := os.LookupEnv("PORT")
 
-	if err {
-		httpHandler.Router.Run()
-	}
-
 	x := todoapi.NewGinController(log, cfg, jwtToken)
 
 	x.AddUsecase(
@@ -59,6 +55,9 @@ func (todoapp) Run() error {
 	)
 	x.RegisterRouter(httpHandler.Router)
 
+	if err {
+		httpHandler.Router.Run()
+	}
 	httpHandler.RunWithGracefullyShutdown()
 
 	return nil
