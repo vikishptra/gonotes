@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=builder /app/vikishptra /usr/bin/
 COPY --from=builder /app/config.json /app
 
-
+ENV PORT=8000
 
 ENTRYPOINT ["vikishptra", "todoapp"]
 
