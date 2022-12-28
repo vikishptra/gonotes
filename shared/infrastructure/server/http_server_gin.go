@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -20,6 +21,11 @@ type GinHTTPHandler struct {
 func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.ApplicationData) GinHTTPHandler {
 
 	router := gin.Default()
+	_, err := os.LookupEnv("PORT")
+
+	if err {
+		router.Run(":" + os.Getenv("PORT"))
+	}
 
 	// PING API
 	router.GET("/ping", func(c *gin.Context) {

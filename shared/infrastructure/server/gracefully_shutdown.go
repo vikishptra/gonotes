@@ -31,10 +31,12 @@ func NewGracefullyShutdown(log logger.Logger, handler http.Handler, address stri
 func (r *GracefullyShutdown) RunWithGracefullyShutdown() {
 
 	go func() {
+
 		if err := r.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			r.log.Error(context.Background(), "listen: %s", err)
 			os.Exit(1)
 		}
+
 	}()
 
 	r.log.Info(context.Background(), "server is running at %v", r.httpServer.Addr)
