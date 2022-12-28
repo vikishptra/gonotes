@@ -2,7 +2,6 @@ package server
 
 import (
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -38,11 +37,7 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 		AllowHeaders:    []string{"Content-Type", "Authorization"},
 		MaxAge:          12 * time.Hour,
 	}))
-	_, err := os.LookupEnv("PORT")
 
-	if err {
-		router.Run()
-	}
 	return GinHTTPHandler{
 		GracefullyShutdown: NewGracefullyShutdown(log, router, address),
 		Router:             router,
