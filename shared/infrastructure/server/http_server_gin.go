@@ -42,7 +42,7 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 	_, err := os.LookupEnv("PORT")
 
 	if err {
-		router.Run("PORT")
+		router.Run()
 	}
 
 	return GinHTTPHandler{
