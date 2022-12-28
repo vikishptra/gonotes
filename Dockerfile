@@ -29,5 +29,5 @@ COPY --from=builder /app/config.json /app
 
 ENTRYPOINT ["vikishptra", "todoapp"]
 
-CMD [ "./vikishptra","todoapp"] --v
+CMD [ "./vikishptra","todoapp", "0.0.0.0:$PORT"] --v
 

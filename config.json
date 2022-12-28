@@ -3,7 +3,7 @@
       "database": "",
       "host": "",
       "password": "",
-      "port": 8080,
+      "port": 0,
       "username": ""
     },
     "server": {
@@ -11,7 +11,7 @@
     },
     "servers": {
       "todoapp": {
-        "address": ":8080"
+        "address": ":8001"
       }
     }
   }
