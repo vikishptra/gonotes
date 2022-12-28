@@ -28,7 +28,7 @@ COPY --from=builder /app/config.json /app
 
 EXPOSE 8080
 
-ENV $PORT=8080
+ENV PORT=8080
 
 ENTRYPOINT ["vikishptra", "todoapp"]
 
