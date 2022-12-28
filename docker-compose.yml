@@ -30,5 +30,5 @@ services:
     container_name: myapp
     build: .
     entrypoint: "./vikishptra myapp"
-    port:
+    ports:
       - "8080:8080"
