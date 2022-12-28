@@ -11,7 +11,7 @@
     },
     "servers": {
       "todoapp": {
-        "address": ":8001"
+        "address": ":8000"
       }
     }
   }
