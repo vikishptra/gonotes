@@ -28,6 +28,8 @@ COPY --from=builder /app/config.json /app
 
 ENV PORT=8000
 
+EXPOSE 8000
+
 ENTRYPOINT ["vikishptra", "todoapp"]
 
 CMD [ "./vikishptra","todoapp","0.0.0.0:$PORT"] --v
