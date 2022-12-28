@@ -31,18 +31,18 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 	// router.StaticFS("/web", http.FS(contentStatic))
 
 	// CORS
+	router.Use(cors.New(cors.Config{
+		ExposeHeaders:   []string{"Data-Length"},
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
+		AllowAllOrigins: true,
+		AllowHeaders:    []string{"Content-Type", "Authorization"},
+		MaxAge:          12 * time.Hour,
+	}))
 
 	_, err := os.LookupEnv("PORT")
 
 	if err {
-		router.Run()
-		router.Use(cors.New(cors.Config{
-			ExposeHeaders:   []string{"Data-Length"},
-			AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
-			AllowAllOrigins: true,
-			AllowHeaders:    []string{"Content-Type", "Authorization"},
-			MaxAge:          12 * time.Hour,
-		}))
+		router.Run("PORT")
 	}
 
 	return GinHTTPHandler{
