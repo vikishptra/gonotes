@@ -16,7 +16,7 @@ type FindOneCheckedRepo interface {
 }
 
 type GetAllTodoRepo interface {
-	GetAllTodo(ctx context.Context, page, size int) ([]*entity.Todo, int64, int, error)
+	GetAllTodoByPagination(ctx context.Context, page, size int) ([]*entity.Todo, int64, int, error)
 }
 
 type DeleteOneTodoByIDRepo interface {

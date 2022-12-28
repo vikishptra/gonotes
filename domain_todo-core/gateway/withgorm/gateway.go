@@ -74,7 +74,7 @@ func (r *Gateway) FindOneChecked(ctx context.Context, todoID vo.TodoID) (*entity
 	return &todo, nil
 }
 
-func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity.Todo, int64, int, error) {
+func (r *Gateway) GetAllTodoByPagination(ctx context.Context, page int, size int) ([]*entity.Todo, int64, int, error) {
 	r.log.Info(ctx, "called")
 	var todo []*entity.Todo
 
@@ -87,6 +87,7 @@ func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity
 		Find(&todo); err.RowsAffected == 0 {
 		return nil, count, page, errorenum.DataNull
 	}
+
 	if int64(size) > count && int64(size) != count {
 		flag = true
 	}
