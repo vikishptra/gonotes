@@ -38,6 +38,8 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 		MaxAge:          12 * time.Hour,
 	}))
 
+	router.Run("PORT")
+
 	return GinHTTPHandler{
 		GracefullyShutdown: NewGracefullyShutdown(log, router, address),
 		Router:             router,
