@@ -21,11 +21,6 @@ type GinHTTPHandler struct {
 func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.ApplicationData) GinHTTPHandler {
 
 	router := gin.Default()
-	_, err := os.LookupEnv("PORT")
-
-	if err {
-		router.Run()
-	}
 
 	// PING API
 	router.GET("/ping", func(c *gin.Context) {
@@ -34,7 +29,11 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 
 	// contentStatic, _ := fs.Sub(web.StaticFiles, "dist")
 	// router.StaticFS("/web", http.FS(contentStatic))
+	_, err := os.LookupEnv("PORT")
 
+	if err {
+		router.Run()
+	}
 	// CORS
 	router.Use(cors.New(cors.Config{
 		ExposeHeaders:   []string{"Data-Length"},
