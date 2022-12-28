@@ -79,7 +79,7 @@ func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity
 	var todo []*entity.Todo
 
 	var count int64
-
+	flag := false
 	if err := r.Db.
 		Model(entity.Todo{}).
 		Count(&count).
@@ -87,9 +87,12 @@ func (r *Gateway) GetAllTodo(ctx context.Context, page int, size int) ([]*entity
 		Find(&todo); err.RowsAffected == 0 {
 		return nil, count, page, errorenum.DataNull
 	}
-	// if int64(size) > count || int64(size) != count {
-	// 	count = int64(size)
-	// }
+	if int64(size) > count && int64(size) != count {
+		flag = true
+	}
+	if !flag {
+		count = int64(size)
+	}
 	return todo, count, page, nil
 }
 
