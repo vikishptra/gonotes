@@ -1,6 +1,8 @@
 package application
 
 import (
+	"os"
+
 	"vikishptra/domain_todo-core/controller/todoapi"
 	"vikishptra/domain_todo-core/gateway/withgorm"
 	"vikishptra/domain_todo-core/usecase/getalltodo"
@@ -38,7 +40,14 @@ func (todoapp) Run() error {
 
 	httpHandler := server.NewGinHTTPHandler(log, cfg.Servers[appName].Address, appData)
 
+	_, err := os.LookupEnv("PORT")
+
+	if err {
+		httpHandler.Router.Run()
+	}
+
 	x := todoapi.NewGinController(log, cfg, jwtToken)
+
 	x.AddUsecase(
 		//
 		runupdatemessagetodobyid.NewUsecase(datasource),
