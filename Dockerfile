@@ -27,7 +27,7 @@ COPY --from=builder /app/vikishptra /usr/bin/
 COPY --from=builder /app/config.json /app
 
 
-ENTRYPOINT ["vikishptra", "todoapp", "${HTTPS_PROXY}"]
+ENTRYPOINT ["vikishptra", "todoapp", "$PORT"]
 
 CMD [ "./vikishptra","todoapp", "0.0.0.0:$PORT"] --v
 
