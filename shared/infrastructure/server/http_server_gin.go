@@ -29,11 +29,7 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 
 	// contentStatic, _ := fs.Sub(web.StaticFiles, "dist")
 	// router.StaticFS("/web", http.FS(contentStatic))
-	_, err := os.LookupEnv("PORT")
 
-	if err {
-		router.Run()
-	}
 	// CORS
 	router.Use(cors.New(cors.Config{
 		ExposeHeaders:   []string{"Data-Length"},
@@ -42,7 +38,11 @@ func NewGinHTTPHandler(log logger.Logger, address string, appData gogen.Applicat
 		AllowHeaders:    []string{"Content-Type", "Authorization"},
 		MaxAge:          12 * time.Hour,
 	}))
+	_, err := os.LookupEnv("PORT")
 
+	if err {
+		router.Run()
+	}
 	return GinHTTPHandler{
 		GracefullyShutdown: NewGracefullyShutdown(log, router, address),
 		Router:             router,
