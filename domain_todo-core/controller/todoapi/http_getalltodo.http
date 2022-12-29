@@ -1,4 +1,4 @@
 ###
 
-GET https://gonotes-production.up.railway.app/todo
+GET http://localhost:8001/api/v1/todo/?page=2&size=1
 

@@ -2,8 +2,6 @@ package withgorm
 
 import (
 	"context"
-	"fmt"
-	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -27,15 +25,15 @@ type Gateway struct {
 // NewGateway ...
 func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Config) *Gateway {
 
-	dbUser := os.Getenv("MYSQLUSER")
-	dbPassword := os.Getenv("MYSQLPASSWORD")
-	dbHost := os.Getenv("MYSQLHOST")
-	dbPort := os.Getenv("MYSQLPORT")
-	database := os.Getenv("MYSQLDATABASE")
+	// dbUser := os.Getenv("MYSQLUSER")
+	// dbPassword := os.Getenv("MYSQLPASSWORD")
+	// dbHost := os.Getenv("MYSQLHOST")
+	// dbPort := os.Getenv("MYSQLPORT")
+	// database := os.Getenv("MYSQLDATABASE")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
+	// dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
 
-	Db, err := gorm.Open("mysql", dsn)
+	Db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/notes?charset=utf8&parseTime=True")
 
 	if err != nil {
 		panic(err)
@@ -77,10 +75,39 @@ func (r *Gateway) FindOneChecked(ctx context.Context, todoID vo.TodoID) (*entity
 func (r *Gateway) GetAllTodoByPagination(ctx context.Context, page int, size int) ([]*entity.Todo, int64, int, error) {
 	r.log.Info(ctx, "called")
 	var todo []*entity.Todo
-
 	var count int64
 	flag := false
-	if err := r.Db.
+
+	if page == 0 && size == 0 {
+		if err := r.Db.
+			Model(entity.Todo{}).
+			Count(&count).
+			Find(&todo); err.RowsAffected == 0 {
+			return nil, 0, 0, errorenum.DataNull
+		}
+		return todo, count, 1, nil
+	} else if page == 0 || page < 0 {
+		if err := r.Db.
+			Model(entity.Todo{}).
+			Limit(size).Offset((page - 1) * size).
+			Find(&todo); err.RowsAffected == 0 {
+			return nil, 0, 0, errorenum.DataNull
+		}
+
+		todos := r.Db.Model(entity.Todo{}).Count(&count).Limit(size).Offset((page - 1) * size).Find(&todo)
+		if todos.RowsAffected < int64(size) || 0 > int64(size) {
+			return todo, todos.RowsAffected, 1, nil
+		}
+		return todo, int64(size), 1, nil
+	} else if size == 0 || size < 0 {
+		if err := r.Db.
+			Model(entity.Todo{}).
+			Count(&count).
+			Find(&todo); err.RowsAffected == 0 {
+			return nil, 0, 0, errorenum.DataNull
+		}
+		return todo, count, 1, nil
+	} else if err := r.Db.
 		Model(entity.Todo{}).
 		Count(&count).
 		Limit(size).Offset((page - 1) * size).
@@ -94,6 +121,7 @@ func (r *Gateway) GetAllTodoByPagination(ctx context.Context, page int, size int
 	if !flag {
 		count = int64(size)
 	}
+
 	return todo, count, page, nil
 }
 
