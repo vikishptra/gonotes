@@ -2,6 +2,8 @@ package withgorm
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -25,15 +27,15 @@ type Gateway struct {
 // NewGateway ...
 func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Config) *Gateway {
 
-	// dbUser := os.Getenv("MYSQLUSER")
-	// dbPassword := os.Getenv("MYSQLPASSWORD")
-	// dbHost := os.Getenv("MYSQLHOST")
-	// dbPort := os.Getenv("MYSQLPORT")
-	// database := os.Getenv("MYSQLDATABASE")
+	dbUser := os.Getenv("MYSQLUSER")
+	dbPassword := os.Getenv("MYSQLPASSWORD")
+	dbHost := os.Getenv("MYSQLHOST")
+	dbPort := os.Getenv("MYSQLPORT")
+	database := os.Getenv("MYSQLDATABASE")
 
-	// dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, database)
 
-	Db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/notes?charset=utf8&parseTime=True")
+	Db, err := gorm.Open("mysql", dsn)
 
 	if err != nil {
 		panic(err)
