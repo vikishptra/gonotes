@@ -1,7 +1,7 @@
 
 # GO-NOTES
 
-GO-NOTES adalah sebuah microservice simple notes yang di dalam nya terdapat operasi create,read,update,delete yang sudah pasti terdapat error handling sesuai dengan case saya sendiri
+GO-NOTES adalah sebuah service simple notes yang di dalam nya terdapat operasi create,read,update,delete yang sudah pasti terdapat error handling sesuai dengan case saya sendiri
 
 - runCreateTodo 
 - getAllTodo
