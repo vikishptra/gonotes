@@ -43,7 +43,8 @@ func (r *ginController) runTodoCreateHandler() gin.HandlerFunc {
 		}
 
 		var req InportRequest
-		req.Message = jsonReq.Message
+		req.Title = jsonReq.Title
+		req.Description = jsonReq.Description
 		req.Now = time.Now()
 		req.RandomString = util.GenerateID(5)
 

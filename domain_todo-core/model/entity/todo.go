@@ -9,21 +9,23 @@ import (
 )
 
 type Todo struct {
-	ID      vo.TodoID `bson:"_id" json:"id"`
-	Created time.Time `bson:"created" json:"created"`
-	Message string    `json:"message"`
-	Checked bool      `json:"checked"`
+	ID          vo.TodoID `bson:"_id" json:"id"`
+	Created     time.Time `bson:"created" json:"created"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Checked     bool      `json:"checked"`
 }
 
 type TodoCreateRequest struct {
 	RandomString string    `json:"-"`
 	Now          time.Time `json:"-"`
-	Message      string    `json:"message"`
+	Title        string    `json:"title"`
+	Description  string    `json:"description"`
 }
 
 func (r TodoCreateRequest) Validate() error {
 
-	if strings.TrimSpace(r.Message) == "" {
+	if strings.TrimSpace(r.Title) == "" || strings.TrimSpace(r.Description) == "" {
 		return errorenum.MessageEmpty
 	}
 
@@ -32,7 +34,7 @@ func (r TodoCreateRequest) Validate() error {
 
 func NewTodo(req TodoCreateRequest) (*Todo, error) {
 
-	id, err := vo.NewTodoID(req.RandomString, req.Now, req.Message)
+	id, err := vo.NewTodoID(req.RandomString, req.Now, req.Title, req.Description)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +42,8 @@ func NewTodo(req TodoCreateRequest) (*Todo, error) {
 	var obj Todo
 	obj.ID = id
 	obj.Created = req.Now
-	obj.Message = req.Message
+	obj.Title = req.Title
+	obj.Description = req.Description
 
 	return &obj, req.Validate()
 }
@@ -58,7 +61,7 @@ func (r *Todo) SetTrue() error {
 
 func (r TodoUpdateRequest) Validate() error {
 
-	if strings.TrimSpace(r.Message) == "" {
+	if strings.TrimSpace(r.Title) == "" || strings.TrimSpace(r.Description) == "" {
 		return errorenum.MessageEmpty
 	}
 
@@ -66,12 +69,14 @@ func (r TodoUpdateRequest) Validate() error {
 }
 
 type TodoUpdateRequest struct {
-	ID      vo.TodoID `uri:"id"`
-	Message string    `json:"message"`
+	ID          vo.TodoID `uri:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
 }
 
 func (r *Todo) Update(req TodoUpdateRequest) error {
-	r.Message = req.Message
+	r.Title = req.Title
+	r.Description = req.Description
 
 	return req.Validate()
 }

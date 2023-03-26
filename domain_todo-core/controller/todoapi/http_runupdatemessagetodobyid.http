@@ -1,5 +1,6 @@
-PUT  http://localhost:8001/api/v1/todo/message/2cf3ca6c-c447-440e-af5e-1209dc8a0041
+PUT  http://localhost:8001/api/v1/todo/message/1e12df96-5a08-447c-bcc2-56dcbd4b9323
 
 {  
-  "message": "update put"
+  "title": "update put",
+  "description":"sasa"
 }

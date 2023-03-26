@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"vikishptra/domain_todo-core/model/errorenum"
-	"vikishptra/domain_todo-core/model/vo"
 	"vikishptra/domain_todo-core/usecase/runtododeletebyid"
 	"vikishptra/shared/gogen"
 	"vikishptra/shared/infrastructure/logger"
@@ -23,7 +22,7 @@ func (r *ginController) runTodoDeleteByIDHandler() gin.HandlerFunc {
 	inport := gogen.GetInport[InportRequest, InportResponse](r.GetUsecase(InportRequest{}))
 
 	type request struct {
-		TodoID vo.TodoID `uri:"id"`
+		InportRequest
 	}
 
 	type response struct {
@@ -45,23 +44,22 @@ func (r *ginController) runTodoDeleteByIDHandler() gin.HandlerFunc {
 
 		var req InportRequest
 		req.TodoID = jsonReq.TodoID
-
 		r.log.Info(ctx, util.MustJSON(req))
 
-		res, err := inport.Execute(ctx, req)
+		_, err := inport.Execute(ctx, req)
 		if err != nil {
 			if err == errorenum.DataNull {
 				c.JSON(http.StatusNotFound, payload.NewErrorResponse(err, traceID))
 				return
 			}
 			r.log.Error(ctx, err.Error())
+
 			c.JSON(http.StatusBadRequest, payload.NewErrorResponse(err, traceID))
 			return
 		}
 
-		var jsonRes response
-		jsonRes.Pesan = res.Pesan
-
+		var jsonRes InportResponse
+		jsonRes.Pesan = "ok success"
 		r.log.Info(ctx, util.MustJSON(jsonRes))
 		c.JSON(http.StatusOK, payload.NewSuccessResponse(jsonRes, traceID))
 

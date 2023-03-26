@@ -20,7 +20,7 @@ type GetAllTodoRepo interface {
 }
 
 type DeleteOneTodoByIDRepo interface {
-	DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error)
+	DeleteOneTodoByID(ctx context.Context, todoID string) error
 }
 
 type FindMessageTodoEmptyRepo interface {

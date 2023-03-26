@@ -8,7 +8,7 @@ import (
 type Inport gogen.Inport[InportRequest, InportResponse]
 
 type InportRequest struct {
-	TodoID vo.TodoID
+	TodoID vo.TodoID `uri:"id"`
 }
 
 type InportResponse struct {

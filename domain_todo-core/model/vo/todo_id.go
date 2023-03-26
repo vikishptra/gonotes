@@ -6,7 +6,7 @@ import (
 
 type TodoID string
 
-func NewTodoID(randomStringID string, now time.Time, message string) (TodoID, error) {
+func NewTodoID(randomStringID string, now time.Time, title, description string) (TodoID, error) {
 	var obj = TodoID(randomStringID)
 	return obj, nil
 }

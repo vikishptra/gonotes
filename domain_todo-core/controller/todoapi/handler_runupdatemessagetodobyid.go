@@ -50,7 +50,8 @@ func (r *ginController) runUpdateMessageTodoByIDHandler() gin.HandlerFunc {
 		}
 		var req InportRequest
 		req.ID = jsonReqUri.ID
-		req.Message = jsonReqJSON.Message
+		req.Title = jsonReqJSON.Title
+		req.Description = jsonReqJSON.Description
 
 		r.log.Info(ctx, util.MustJSON(req))
 

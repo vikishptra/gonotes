@@ -2,8 +2,6 @@ package runtododeletebyid
 
 import (
 	"context"
-
-	"vikishptra/domain_todo-core/model/errorenum"
 )
 
 type runTodoDeleteByIDInteractor struct {
@@ -24,11 +22,10 @@ func (r *runTodoDeleteByIDInteractor) Execute(ctx context.Context, req InportReq
 	if err != nil {
 		return nil, err
 	}
-	if !todoObj.Checked {
-		return nil, errorenum.SomethingError
+	err = r.outport.DeleteOneTodoByID(ctx, todoObj.ID.String())
+	if err != nil {
+		return nil, err
 	}
-	r.outport.DeleteOneTodoByID(ctx, todoObj.ID)
-	res.Pesan = "ok success"
 
 	return res, nil
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/joho/godotenv"
 
 	"vikishptra/domain_todo-core/model/entity"
 	"vikishptra/domain_todo-core/model/errorenum"
@@ -26,6 +27,11 @@ type Gateway struct {
 
 // NewGateway ...
 func NewGateway(log logger.Logger, appData gogen.ApplicationData, cfg *config.Config) *Gateway {
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
 
 	dbUser := os.Getenv("MYSQLUSER")
 	dbPassword := os.Getenv("MYSQLPASSWORD")
@@ -127,18 +133,20 @@ func (r *Gateway) GetAllTodoByPagination(ctx context.Context, page int, size int
 	return todo, count, page, nil
 }
 
-func (r *Gateway) DeleteOneTodoByID(ctx context.Context, todoID vo.TodoID) (*entity.Todo, error) {
+func (r *Gateway) DeleteOneTodoByID(ctx context.Context, todoID string) error {
 	r.log.Info(ctx, "called")
-	var todo entity.Todo
-	r.Db.Where("id = ?", todoID).Delete(&todo)
+	var Todo entity.Todo
+	if err := r.Db.Where("id = ? ", todoID).Delete(Todo); err.RecordNotFound() {
+		return errorenum.DataNull
+	}
 
-	return &todo, nil
+	return nil
 }
 
 func (r *Gateway) FindMessageTodoEmpty(ctx context.Context, todo *entity.Todo) error {
 	r.log.Info(ctx, "called")
 	var todos entity.Todo
-	if err := r.Db.Where("message = ?", todo.Message).First(&todos); !err.RecordNotFound() {
+	if err := r.Db.Where("title = ?", todo.Title).First(&todos); !err.RecordNotFound() {
 		return errorenum.ObjSame
 	}
 	return nil
